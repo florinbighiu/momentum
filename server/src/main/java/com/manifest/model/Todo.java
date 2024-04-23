@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,6 +23,7 @@ public class Todo {
     private String description;
     private LocalDateTime createdAt;
     private boolean completed;
+    private LocalDate dueDate;
 
     private String userId;
     private String organizationId;

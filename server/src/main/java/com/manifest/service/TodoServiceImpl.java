@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -30,9 +32,36 @@ public class TodoServiceImpl implements TodoService {
         }
 
         if (organizationId == null) {
-            return todoRepository.findAllByUserId(userId);
+            return todoRepository.findAllByUserIdAndOrganizationIdIsNull(userId);
         } else {
-            return todoRepository.findByUserIdAndOrganizationId(userId, organizationId);
+            return todoRepository.findByOrganizationId(organizationId);
+        }
+    }
+
+    @Override
+    public Todo patchTodo(Long id, Map<String, Object> updates) {
+        Optional<Todo> existingTodo = todoRepository.findById(id);
+        if (existingTodo.isEmpty()) {
+            throw new IllegalArgumentException("Todo with ID " + id + " not found");
+        }
+
+        Todo todo = existingTodo.get();
+        updateTodoFields(todo, updates);
+
+        todoRepository.save(todo);
+        return todo;
+    }
+
+    private void updateTodoFields(Todo todo, Map<String, Object> updates) {
+        for (String key : updates.keySet()) {
+            switch (key) {
+                case "name":
+                    todo.setName((String) updates.get(key));
+                    break;
+                case "completed":
+                    todo.setCompleted((Boolean) updates.get(key));
+                    break;
+            }
         }
     }
 }
