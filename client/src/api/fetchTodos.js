@@ -16,6 +16,8 @@ export async function fetchTodos(userId, organizationId = null) {
     throw new Error(`Failed to fetch todos: ${response.statusText}`);
   }
 
-  return await response.json();
+  const data = await response.json();
+
+  return data
 }
 

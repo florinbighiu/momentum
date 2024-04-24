@@ -5,4 +5,5 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   plugins: [react()],
   envPrefix: ["BASE_URL", "VITE_CLERK_PUBLISHABLE_KEY"],
+
 });
