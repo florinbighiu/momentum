@@ -13,7 +13,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.List;
 
 @Configuration
-@EnableWebSecurity // Enable Spring Security
+@EnableWebSecurity 
 public class SecurityConfig {
 
     @Bean
@@ -31,15 +31,15 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173")); // Replace with your frontend origin
+        config.setAllowedOrigins(List.of("http://localhost:5173")); 
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         config.setAllowedHeaders(List.of("Content-Type", "Authorization"));
-        config.setAllowCredentials(true); // Allow cookies for authentication (if applicable)
+        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config); // Apply CORS configuration to all paths
+        source.registerCorsConfiguration("/**", config);
         return source;
     }
 }

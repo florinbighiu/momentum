@@ -5,7 +5,9 @@ import com.manifest.repository.TodoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -36,6 +38,18 @@ public class TodoServiceImpl implements TodoService {
         } else {
             return todoRepository.findByOrganizationId(organizationId);
         }
+    }
+
+
+    @Override
+    public void deleteTodo(Long id) {
+        Optional<Todo> existingTodo = todoRepository.findById(id);
+        if (existingTodo.isEmpty()) {
+            throw new IllegalArgumentException("Todo with ID " + id + " not found");
+        }
+
+        Todo todo = existingTodo.get();
+        todoRepository.delete(todo);
     }
 
     @Override

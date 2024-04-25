@@ -4,16 +4,14 @@ import com.manifest.model.Todo;
 import com.manifest.service.TodoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @AllArgsConstructor
-@Controller
+@RestController
 @RequestMapping("/api/todos")
 @CrossOrigin(origins = "http://localhost:5173")
 public class TodoController {
@@ -22,7 +20,8 @@ public class TodoController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping
-    public ResponseEntity<List<Todo>> getTodos(@RequestParam String userId, @RequestParam(required = false) String organizationId) {
+    public ResponseEntity<List<Todo>> getTodos(@RequestParam String userId,
+            @RequestParam(required = false) String organizationId) {
         try {
             List<Todo> todos = todoService.getTodos(userId, organizationId);
             return ResponseEntity.ok(todos);
@@ -31,7 +30,19 @@ public class TodoController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:5173") // Replace with your frontend origin
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTodoById(@PathVariable Long id) {
+        try {
+            todoService.deleteTodo(id);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/create")
     public ResponseEntity<Todo> createTodo(@RequestBody Todo todo) {
         try {
@@ -54,5 +65,13 @@ public class TodoController {
         }
     }
 
-
 }
+
+// Why do i get this error?
+// GET http://localhost:8080/api/todos/upcoming 403 (Forbidden)
+// Access to XMLHttpRequest at
+// 'http://localhost:8080/api/todos/upcoming?userId=1' from origin
+// 'http://localhost:5173' has been blocked by CORS policy: No
+// 'Access-Control-Allow-Origin' header is present on the requested resource.
+// I have added the @CrossOrigin annotation to the controller and the method,
+// but it still doesn't work. What am I missing?

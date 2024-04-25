@@ -1,5 +1,5 @@
-export async function fetchTodos(userId, organizationId = null) {
-  const url = new URL("http://localhost:8080/api/todos", window.location.origin); 
+export async function fetchUpcomingTasks(userId, organizationId = null) {
+  const url = new URL("http://localhost:8080/api/todos", window.location.origin);
   url.searchParams.append("userId", userId);
   if (organizationId) {
     url.searchParams.append("organizationId", organizationId);
@@ -8,7 +8,7 @@ export async function fetchTodos(userId, organizationId = null) {
   const response = await fetch(url.toString(), {
     method: "GET",
     headers: {
-      "Content-Type": "application/json", 
+      "Content-Type": "application/json",
     },
   });
 
@@ -18,6 +18,8 @@ export async function fetchTodos(userId, organizationId = null) {
 
   const data = await response.json();
 
-  return data
-}
+  const today = new Date();
+  const upcomingTodos = data.filter((todo) => new Date(todo.dueDate) > today);
 
+  return upcomingTodos;
+}
