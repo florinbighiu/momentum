@@ -22,6 +22,7 @@ public class Todo {
     private String name;
     private String description;
     private LocalDateTime createdAt;
+    private boolean important;
     private boolean completed;
     private LocalDate dueDate;
 

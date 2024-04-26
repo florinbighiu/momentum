@@ -75,6 +75,12 @@ public class TodoServiceImpl implements TodoService {
                 case "completed":
                     todo.setCompleted((Boolean) updates.get(key));
                     break;
+                case "important":
+                    todo.setImportant((Boolean) updates.get(key));
+                    break;
+                case "description":
+                    todo.setDescription((String) updates.get(key));
+                    break;
             }
         }
     }

@@ -1,5 +1,5 @@
 export const pageTransition = {
-  duration: 1, 
+  duration: 0.3, 
   ease: "easeInOut", 
 };
 
@@ -10,7 +10,7 @@ export const formTransition = {
 };
 
 export const fade = {
-  opacity: 0, 
+  opacity: 0.6, 
 };
 
 export const fadeIn = {

@@ -8,8 +8,9 @@ import DashboardLayout from './layout/dashboard-layout'
 import LandingPage from './pages/LandingPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
-import TodosList from './pages/TodosList';
+import TodayTasks from './pages/TodayTasks';
 import { UpcomingTasks } from './pages/UpcomingTasks';
+import { ImportantTasks } from './pages/ImportantTasks';
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -29,8 +30,10 @@ const router = createBrowserRouter([
         element: <DashboardLayout />,
         path: "",
         children: [
-          { path: "/todos", element: <TodosList /> },
-          { path: "/upcoming", element: <UpcomingTasks /> }
+          { path: "/todos", element: <TodayTasks /> },
+          { path: "/upcoming", element: <UpcomingTasks /> },
+          { path: "/important", element: <ImportantTasks /> },
+
         ]
       },
 

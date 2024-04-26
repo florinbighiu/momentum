@@ -66,12 +66,3 @@ public class TodoController {
     }
 
 }
-
-// Why do i get this error?
-// GET http://localhost:8080/api/todos/upcoming 403 (Forbidden)
-// Access to XMLHttpRequest at
-// 'http://localhost:8080/api/todos/upcoming?userId=1' from origin
-// 'http://localhost:5173' has been blocked by CORS policy: No
-// 'Access-Control-Allow-Origin' header is present on the requested resource.
-// I have added the @CrossOrigin annotation to the controller and the method,
-// but it still doesn't work. What am I missing?
