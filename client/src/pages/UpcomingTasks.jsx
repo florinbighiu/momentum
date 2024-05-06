@@ -56,6 +56,20 @@ export function UpcomingTasks() {
         }
     }
 
+    const setImportantState = async (todoId) => {
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            await markAsImportant(todoId);
+            fetchData();
+        } catch (error) {
+            setError(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     if (error) return <p>Error: {error.message}</p>;
 
 
@@ -77,7 +91,7 @@ export function UpcomingTasks() {
             )}
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full h-full p-10 overflow-y-auto'>
                 {todos.map(todo =>
-                    <TaskCard key={todo.id} todo={todo} handleTodoDelete={() => handleTodoDelete(todo.id)} markAsImportant={() => markAsImportant(todo.id)} />
+                    <TaskCard key={todo.id} todo={todo} handleTodoDelete={() => handleTodoDelete(todo.id)} markAsImportant={() => setImportantState(todo.id)} />
                 )
                 }
             </div>

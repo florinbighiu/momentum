@@ -1,5 +1,5 @@
 export const pageTransition = {
-  duration: 0.3, 
+  duration: 1, 
   ease: "easeInOut", 
 };
 

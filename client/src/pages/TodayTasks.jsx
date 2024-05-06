@@ -69,15 +69,15 @@ const TodayTasks = () => {
     if (error) return <p>Error: {error.message}</p>;
 
     return (
-            <div className="flex flex-col gap-8 justify-center items-center w-full h-full p-5">
-                <TodoForm handleTodoCreate={fetchData} organizationId={organizationId} userId={userId} />
-                <div className='grid grid-cols-3 gap-4 w-full h-full overflow-y-auto'>
-                    {tasks.map(todo =>
-                        <TodoCard key={todo.id} todo={todo} markAsImportant={() => setImportantState(todo.id)} handleTodoDelete={() => handleTodoDelete(todo.id)} />
-                    )
-                    }
-                </div>
+        <div className="flex flex-col gap-8 justify-center items-center w-full h-full p-5">
+            <TodoForm handleTodoCreate={fetchData} organizationId={organizationId} userId={userId} />
+            <div className='grid grid-cols-3 gap-4 w-full h-full overflow-y-auto'>
+                {tasks.map(todo =>
+                    <TodoCard key={todo.id} todo={todo} markAsImportant={() => setImportantState(todo.id)} handleTodoDelete={() => handleTodoDelete(todo.id)} />
+                )
+                }
             </div>
+        </div>
     );
 };
 

@@ -55,9 +55,6 @@ export function ImportantTasks() {
         }
     }
 
-    if (error) return <p>Error: {error.message}</p>;
-
-
     return (
         <motion.div
             initial={fade}
