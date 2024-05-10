@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        logo: ["Ailerons", "sans-serif"],
+        inter: ["Inter Medium"],
       },
       backgroundImage: {
         background: "url('./assets/background.jpg')",

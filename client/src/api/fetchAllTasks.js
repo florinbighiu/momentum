@@ -1,4 +1,4 @@
-export async function fetchTasks(userId, organizationId = null) {
+export async function fetchAllTasks(userId, organizationId = null) {
   const url = new URL("http://localhost:8080/api/todos", window.location.origin);
   url.searchParams.append("userId", userId);
   if (organizationId) {
@@ -18,13 +18,5 @@ export async function fetchTasks(userId, organizationId = null) {
 
   const data = await response.json();
 
-  const todayTasks = data.filter((todo) => {
-    const dueDate = new Date(todo.dueDate).getDate();
-
-    const today = new Date().getDate();
-
-    return dueDate === today;
-  });
-
-  return todayTasks;
+  return data;
 }

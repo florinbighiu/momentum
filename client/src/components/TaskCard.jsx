@@ -4,9 +4,9 @@ import { MdDeleteForever } from "react-icons/md";
 
 function TodoCard({ todo, handleTodoDelete, markAsImportant }) {
     return (
-        <div className="bg-background bg-cover bg-no-repeat hover:cursor-pointer  max-h-80 flex justify-between flex-col border rounded-lg shadow-md p-6">
+        <div className="bg-background bg-cover bg-no-repeat hover:cursor-pointer hover:scale-[0.99] transition-all duration-300 max-h-40 flex justify-between flex-col border rounded-lg shadow-md p-6">
             <div className="flex flex-row justify-between gap-3">
-                <h2 className="text-xl font-bold text-white">{todo.name}</h2>
+                <h2 className="text-xl text-center w-full font-bold text-white">{todo.name}</h2>
                 {!todo.important && (
                     <button className="bg-white bg-opacity-35 px-3 rounded-md hover:scale-90 transition-all ease-in-out" onClick={() => markAsImportant(todo.id)}>!</button>
                 )}

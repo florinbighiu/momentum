@@ -1,39 +1,60 @@
-import { useEffect, useState } from 'react';
-import { useGetUserId } from '../hooks/getUserId';
-import { useGetUserOrgId } from '../hooks/getUserOrgId';
-import TodoForm from '../components/TodoForm';
-import TodoCard from '../components/TaskCard';
-import Loading from '../components/Loading';
-import { deleteTask } from '../api/deleteTask';
-import { markAsImportant } from '../api/markAsImportant';
-import { fetchTasks } from '../api/fetchTasks';
+import { useEffect, useState } from "react";
+import TaskCard from "../components/TaskCard";
+import { useGetUserId } from "../hooks/getUserId";
+import { useGetUserOrgId } from "../hooks/getUserOrgId";
+import { motion } from 'framer-motion';
+import { fadeOut, pageTransition, fade, fadeIn } from "../utils/framer";
+import { deleteTask } from "../api/deleteTask";
+import Loading from "../components/Loading";
+import calendar from "../assets/calendar.png"
+import { fetchTasks } from "../api/fetchTasks";
+import { markAsImportant } from "../api/markAsImportant";
 
-const TodayTasks = () => {
-    const userId = useGetUserId();
-    const organizationId = useGetUserOrgId();
-    const [tasks, setTasks] = useState([]);
+export default function TodayTasks() {
+    const [todos, setTodos] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const userId = useGetUserId();
+    const organizationId = useGetUserOrgId();
 
     useEffect(() => {
         fetchData();
     }, [userId, organizationId]);
 
-
     const fetchData = async () => {
+        if (userId) {
+            setIsLoading(true);
+            setError(null);
+
+            try {
+                const response = await fetchTasks(userId, organizationId);
+                setTodos(response);
+            } catch (error) {
+                setError(error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+    };
+
+    if (error) return <p>Error: {error.message}</p>;
+
+    if (isLoading) return <Loading />;
+
+    const handleTodoDelete = async (todoId) => {
         setIsLoading(true);
         setError(null);
 
         try {
-            const response = await fetchTasks(userId, organizationId);
-            setTasks(response);
+            await deleteTask(todoId);
+            fetchData();
         } catch (error) {
             setError(error);
         } finally {
             setIsLoading(false);
         }
-    };
-
+    }
 
     const setImportantState = async (todoId) => {
         setIsLoading(true);
@@ -49,36 +70,28 @@ const TodayTasks = () => {
         }
     }
 
-    const handleTodoDelete = async (todoId) => {
-        setIsLoading(true);
-        setError(null);
-
-        try {
-            await deleteTask(todoId);
-            fetchData()
-        } catch (error) {
-            setError(error);
-        } finally {
-            setIsLoading(false);
-        }
-    }
-
-
-    if (isLoading) return <Loading />;
-
-    if (error) return <p>Error: {error.message}</p>;
-
     return (
-        <div className="flex flex-col gap-8 justify-center items-center w-full h-full p-5">
-            <TodoForm handleTodoCreate={fetchData} organizationId={organizationId} userId={userId} />
-            <div className='grid grid-cols-3 gap-4 w-full h-full overflow-y-auto'>
-                {tasks.map(todo =>
-                    <TodoCard key={todo.id} todo={todo} markAsImportant={() => setImportantState(todo.id)} handleTodoDelete={() => handleTodoDelete(todo.id)} />
+        <motion.div
+            initial={fade}
+            animate={fadeIn}
+            exit={fadeOut}
+            transition={pageTransition}
+            className="w-full h-screen"
+        >
+            {todos.length === 0 && (
+                <div className="flex flex-col items-center justify-center h-full w-full">
+                    <img src={calendar} alt="EmptyCart" className="w-[12rem] " />
+                    <h1 className="w-full text-center font-sans  mt-2">
+                        Nothing here at the moment...
+                    </h1>
+                </div>
+            )}
+            <div className='grid grid-cols-1 gap-4 w-full p-10 overflow-y-auto'>
+                {todos.map(todo =>
+                    <TaskCard key={todo.id} todo={todo} markAsImportant={() => setImportantState(todo.id)} handleTodoDelete={() => handleTodoDelete(todo.id)} />
                 )
                 }
             </div>
-        </div>
+        </motion.div>
     );
-};
-
-export default TodayTasks;
+}

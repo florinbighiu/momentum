@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
@@ -11,6 +10,7 @@ import SignUpPage from './pages/SignUpPage';
 import TodayTasks from './pages/TodayTasks';
 import { UpcomingTasks } from './pages/UpcomingTasks';
 import { ImportantTasks } from './pages/ImportantTasks';
+import AllTaks from './pages/AllTasks';
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -31,6 +31,7 @@ const router = createBrowserRouter([
         path: "",
         children: [
           { path: "/todos", element: <TodayTasks /> },
+          { path: "/all", element: <AllTaks /> },
           { path: "/upcoming", element: <UpcomingTasks /> },
           { path: "/important", element: <ImportantTasks /> },
 
@@ -42,7 +43,5 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>,
 )

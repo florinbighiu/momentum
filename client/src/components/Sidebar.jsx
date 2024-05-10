@@ -17,10 +17,10 @@ export default function Sidebar() {
             exit={fadeOut}
             transition={pageTransition}
         >
-            <div id="sidebar" className="w-64  h-screen bg-transparent flex flex-col justify-between items-center p-4">
-                <div className="flex flex-col h-full w-full space-y-12">
+            <div id="sidebar" className="sm:w-64 w-full sm:h-screen bg-transparent flex sm:flex-col flex-row justify-between items-center p-4">
+                <div className="flex flex-row md:flex-col h-full w-full space-y-12">
                     <div className="w-full">
-                        <ul className="space-y-2 text-gray-300 font-medium w-full">
+                        <ul className="space-y-2 flex flex-row sm:flex-col text-gray-300 font-medium w-fit">
                             <Link to="/todos">
                                 <li className="hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3">
                                     <BsSun />
@@ -45,7 +45,7 @@ export default function Sidebar() {
                                     Completed
                                 </li>
                             </Link>
-                            <Link to="/">
+                            <Link to="/all">
                                 <li className="hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3">
                                     <TbSmartHome />
                                     All tasks

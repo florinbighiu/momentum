@@ -22,7 +22,7 @@ export default function LandingPage() {
                     </SignedIn>
                     <SignedOut>
                         <SignInButton>
-                            <Button >Sign In {' '} <span aria-hidden="true"> →</span></Button>
+                            <Button >Sign In</Button>
                         </SignInButton>
                     </SignedOut>
                 </div>

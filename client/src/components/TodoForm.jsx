@@ -37,7 +37,7 @@ const TodoForm = ({ handleTodoCreate, organizationId, userId }) => {
             <div >
                 <button className='w-full flex items-center gap-2 justify-center border rounded-md py-2 px-4 bg-slate-200 hover:bg-slate-100 cursor-pointer bg-opacity-25' onClick={toggleForm}>
                     <MdAdd className="text-xl" />
-                    <span className="text-gray-600 font-semibold">New task</span>
+                    <span className="text-gray-600 text-sm">New task</span>
                 </button>
             </div>
             {showForm && (

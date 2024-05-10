@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 body {
-    font-family: 'PP Pier Sans Bold';
+    font-family: 'Inter SemiBold';
+    overflow: hidden;
 }
 
 #sidebar {
@@ -14,67 +15,4 @@ body {
 #landing {
     background: rgb(122, 72, 137);
     background: radial-gradient(circle, rgba(122, 72, 137, 1) 11%, rgba(54, 35, 73, 1) 69%, rgba(31, 22, 51, 1) 100%);
-}
-
-.loading-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    /* Adjust height as needed */
-    width: 100vw;
-    background-color: rgba(0, 0, 0, 0.3);
-}
-
-.spinner {
-    width: 80px;
-    height: 80px;
-    position: relative;
-    animation: rotate 1.4s linear infinite;
-}
-
-.bounce1,
-.bounce2,
-.bounce3 {
-    width: 60%;
-    height: 60%;
-    position: absolute;
-    opacity: 0.8;
-    border-radius: 50%;
-    background-color: #fff;
-    animation-fill-mode: both;
-}
-
-.bounce1 {
-    animation: bounce 1.4s ease-in-out infinite;
-}
-
-.bounce2 {
-    animation: bounce 1.4s ease-in-out infinite delay-0.33s;
-}
-
-.bounce3 {
-    animation: bounce 1.4s ease-in-out infinite delay-0.66s;
-}
-
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes bounce {
-
-    0%,
-    100% {
-        transform: scale(0);
-    }
-
-    50% {
-        transform: scale(1);
-    }
 }

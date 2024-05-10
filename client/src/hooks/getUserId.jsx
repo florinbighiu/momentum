@@ -5,5 +5,9 @@ export const useGetUserId = () => {
 
   const { userId } = user;
 
+  if (!userId) {
+    throw new Error("User ID not found");
+  }
+
   return userId;
 };

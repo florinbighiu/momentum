@@ -3,7 +3,7 @@ import { useAuth } from "@clerk/clerk-react";
 export const useGetUserOrgId = () => {
   const user = useAuth();
 
-  const userOrgId = user?.orgId;
+  const { userOrgId } = user;
 
   return userOrgId;
 };
