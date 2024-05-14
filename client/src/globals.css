@@ -3,8 +3,14 @@
 @tailwind utilities;
 
 body {
-    font-family: 'Inter SemiBold';
+    font-family: 'Inter';
     overflow: hidden;
+}
+
+label, input {
+font-family:'Bahnschrift';
+font-weight: 500;
+
 }
 
 #sidebar {

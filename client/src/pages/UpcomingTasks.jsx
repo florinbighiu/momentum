@@ -7,8 +7,8 @@ import { motion } from 'framer-motion';
 import { fadeOut, pageTransition, fade, fadeIn } from "../utils/framer";
 import { deleteTask } from "../api/deleteTask";
 import Loading from "../components/Loading";
-import calendar from "../assets/calendar.png"
 import { markAsImportant } from "../api/markAsImportant";
+import EmptyPage from "../components/EmptyPage";
 
 export function UpcomingTasks() {
     const [todos, setTodos] = useState([]);
@@ -82,12 +82,7 @@ export function UpcomingTasks() {
             className="w-full h-screen"
         >
             {todos.length === 0 && (
-                <div className="flex flex-col items-center justify-center h-full w-full">
-                    <img src={calendar} alt="EmptyCart" className="w-[12rem] " />
-                    <h1 className="w-full text-center text-2xl font-inter mt-2">
-                        Nothing here at the moment...
-                    </h1>
-                </div>
+                <EmptyPage />
             )}
             <div className='grid grid-cols-1 gap-4 w-full p-10 overflow-y-auto'>
                 {todos.map(todo =>

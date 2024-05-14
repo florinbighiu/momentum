@@ -35,9 +35,9 @@ const TodoForm = ({ handleTodoCreate, organizationId, userId }) => {
     return (
         <div className="flex flex-col space-y-2">
             <div >
-                <button className='w-full flex items-center gap-2 justify-center border rounded-md py-2 px-4 bg-slate-200 hover:bg-slate-100 cursor-pointer bg-opacity-25' onClick={toggleForm}>
+                <button className='w-full flex items-center gap-2 justify-center border rounded-md py-2 px-4 bg-white hover:bg-gray-100 bg-opacity-25 backdrop-blur-md cursor-pointer' onClick={toggleForm}>
                     <MdAdd className="text-xl" />
-                    <span className="text-gray-600 text-sm">New task</span>
+                    <span className="text-gray-600 font-bahn text-md font-semibold">New task</span>
                 </button>
             </div>
             {showForm && (
@@ -48,15 +48,15 @@ const TodoForm = ({ handleTodoCreate, organizationId, userId }) => {
                     transition={pageTransition}
                 >
                     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50">
-                        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-200/75 lg:w-3/12 bg-white rounded-xl shadow-md">
-                            <div className='flex flex-row justify-between w-full '>
-                                <h2 className="text-center font-peace font-semibold my-3 px-5">Upload your task here</h2>
-                                <button className="font-bold hover:bg-gray-100 rounded-xl m-2 px-2" onClick={toggleForm}><IoClose /></button>
+                        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-1 border border-gray-200/75 lg:w-3/12 bg-white rounded-xl shadow-md">
+                            <div className='flex flex-row items-center justify-between w-full '>
+                                <h2 className="text-center font-bahn font-semibold my-3 px-5">Upload your task here</h2>
+                                <button className="font-bold bg-gray-200 bg-opacity-55 hover:bg-gray-300 rounded-full p-1 mr-1" onClick={toggleForm}><IoClose /></button>
                             </div>
-                            <form onSubmit={handleSubmit} className="flex flex-col space-y-5 py-6 p-5">
+                            <form onSubmit={handleSubmit} className="flex flex-col font-inter space-y-5 py-6 p-5">
                                 <div className='flex flex-col space-y-1'>
-                                    <label htmlFor="name" className="text-sm font-medium">
-                                        Task name:
+                                    <label htmlFor="name" className="text-sm">
+                                        Task name
                                     </label>
                                     <input
                                         type="text"
@@ -69,8 +69,8 @@ const TodoForm = ({ handleTodoCreate, organizationId, userId }) => {
                                     />
                                 </div>
                                 <div className='flex flex-col space-y-1'>
-                                    <label htmlFor="name" className="text-sm font-medium">
-                                        Description:
+                                    <label htmlFor="name" className="text-sm">
+                                        Description
                                     </label>
                                     <input
                                         type="text"
@@ -83,8 +83,8 @@ const TodoForm = ({ handleTodoCreate, organizationId, userId }) => {
                                     />
                                 </div>
                                 <div className='flex flex-col space-y-1'>
-                                    <label htmlFor="name" className="text-sm font-medium">
-                                        Due Date:
+                                    <label htmlFor="name" className="text-sm">
+                                        Due date
                                     </label>
                                     <input
                                         type="date"

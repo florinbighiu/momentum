@@ -7,6 +7,7 @@ import Loading from '../components/Loading';
 import { deleteTask } from '../api/deleteTask';
 import { markAsImportant } from '../api/markAsImportant';
 import { fetchAllTasks } from '../api/fetchAllTasks';
+import EmptyPage from '../components/EmptyPage';
 
 const AllTaks = () => {
     const userId = useGetUserId();
@@ -73,11 +74,16 @@ const AllTaks = () => {
     return (
         <div className="flex flex-col gap-2 justify-start items-center mt-5 w-full">
             <TodoForm handleTodoCreate={fetchData} organizationId={organizationId} userId={userId} />
-            <div className='grid grid-cols-1 gap-4 w-full h-5/6 p-5 overflow-y-scroll'>
-                {tasks.map(todo => (
-                    <TodoCard key={todo.id} todo={todo} markAsImportant={() => setImportantState(todo.id)} handleTodoDelete={() => handleTodoDelete(todo.id)} />
-                ))}
-            </div>
+            {tasks.length === 0 ?
+                <EmptyPage /> : (
+                    <div className='flex flex-col justify-start gap-4 w-full p-10 overflow-y-auto'>
+                        {tasks.map(todo => (
+                            <TodoCard key={todo.id} todo={todo} markAsImportant={() => setImportantState(todo.id)} handleTodoDelete={() => handleTodoDelete(todo.id)} />
+                        ))}
+                    </div>
+                )
+            }
+
         </div>
     )
 

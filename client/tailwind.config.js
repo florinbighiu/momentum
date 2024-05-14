@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         inter: ["Inter Medium"],
+        bahn: ["Bahnschrift"],
       },
       backgroundImage: {
         background: "url('./assets/background.jpg')",

@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './globals.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import RootLayout from './layout/root-layout'
