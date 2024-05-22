@@ -1,15 +1,14 @@
 export const pageTransition = {
-  duration: 1, 
-  ease: "easeInOut", 
+  duration: 1,
+  ease: "easeInOut",
 };
-
 
 export const formEntrance = {
   from: {
     opacity: 0,
-    scale: 0.8, 
-    x: 0, 
-    y: 0, 
+    scale: 0.8,
+    x: 0,
+    y: 0,
   },
   to: {
     opacity: 1,
@@ -17,18 +16,17 @@ export const formEntrance = {
     x: 0,
     y: 0,
   },
-  duration: 1, 
-  ease: "easeInOut", 
+  duration: 1,
+  ease: "easeInOut",
 };
 
-
 export const formTransition = {
-  duration: 0.3, 
-  ease: "easeInOut", 
+  duration: 0.1,
+  ease: "easeInOut",
 };
 
 export const fade = {
-  opacity: 0, 
+  opacity: 0,
 };
 
 export const fadeOut = {
@@ -46,11 +44,16 @@ export const fadeIn = {
 };
 
 export const slideIn = {
-  x: "-100%",
+  y: 0,
   opacity: 0,
 };
 
+export const slide = {
+  y: "50%",
+  opacity: 1,
+};
+
 export const slideOut = {
-  x: "100%", 
-  opacity: 0,
+  y: 0, 
+  opacity: 0, 
 };

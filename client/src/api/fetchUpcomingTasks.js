@@ -1,25 +1,11 @@
+import { fetchAllTasks } from "./fetchAllTasks";
+
 export async function fetchUpcomingTasks(userId, organizationId = null) {
-  const url = new URL("http://localhost:8080/api/todos", window.location.origin);
-  url.searchParams.append("userId", userId);
-  if (organizationId) {
-    url.searchParams.append("organizationId", organizationId);
+  try {
+    const tasks = await fetchAllTasks(userId, organizationId);
+    const upcomingTasks = tasks.filter((task) => new Date(task.dueDate) > new Date());
+    return upcomingTasks.filter((task) => !task.completed);
+  } catch (error) {
+    console.error("Error fetching upcoming tasks:", error);
   }
-
-  const response = await fetch(url.toString(), {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch todos: ${response.statusText}`);
-  }
-
-  const data = await response.json();
-
-  const today = new Date();
-  const upcomingTodos = data.filter((todo) => new Date(todo.dueDate) > today);
-
-  return upcomingTodos;
 }

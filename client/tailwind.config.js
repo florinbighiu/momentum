@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        inter: ["Inter Medium"],
+        inter: ["Poppins"],
         bahn: ["Bahnschrift"],
       },
       backgroundImage: {

@@ -17,7 +17,6 @@ export default function RootLayout() {
 
       navigate={navigate} publishableKey={PUBLISHABLE_KEY}>
       <AnimatePresence mode='wait'>
-
         <main className="flex flex-row">
           <Outlet />
         </main>

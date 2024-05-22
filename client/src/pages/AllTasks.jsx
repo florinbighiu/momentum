@@ -6,8 +6,9 @@ import TodoCard from '../components/TaskCard';
 import Loading from '../components/Loading';
 import { deleteTask } from '../api/deleteTask';
 import { markAsImportant } from '../api/markAsImportant';
-import { fetchAllTasks } from '../api/fetchAllTasks';
 import EmptyPage from '../components/EmptyPage';
+import { fetchTasks } from '../api/fetchTasks';
+import { setCompleted } from '../api/setCompleted';
 
 const AllTaks = () => {
     const userId = useGetUserId();
@@ -27,7 +28,7 @@ const AllTaks = () => {
         setError(null);
 
         try {
-            const response = await fetchAllTasks(userId, organizationId);
+            const response = await fetchTasks(userId, organizationId);
             setTasks(response);
             console.log(response);
         } catch (error) {
@@ -66,6 +67,19 @@ const AllTaks = () => {
         }
     }
 
+    const markAsCompleted = async (todoId) => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            await setCompleted(todoId);
+            fetchData();
+        } catch (error) {
+            console.error("Error marking todo as completed:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
 
     if (isLoading) return <Loading />;
 
@@ -76,9 +90,9 @@ const AllTaks = () => {
             <TodoForm handleTodoCreate={fetchData} organizationId={organizationId} userId={userId} />
             {tasks.length === 0 ?
                 <EmptyPage /> : (
-                    <div className='flex flex-col justify-start gap-4 w-full p-10 overflow-y-auto'>
+                    <div className='flex flex-col justify-start gap-4 p-10 w-full overflow-y-auto'>
                         {tasks.map(todo => (
-                            <TodoCard key={todo.id} todo={todo} markAsImportant={() => setImportantState(todo.id)} handleTodoDelete={() => handleTodoDelete(todo.id)} />
+                            <TodoCard key={todo.id} todo={todo} markAsCompleted={() => markAsCompleted(todo.id)} markAsImportant={() => setImportantState(todo.id)} handleTodoDelete={() => handleTodoDelete(todo.id)} />
                         ))}
                     </div>
                 )

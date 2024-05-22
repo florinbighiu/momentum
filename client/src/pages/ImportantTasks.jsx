@@ -8,6 +8,8 @@ import { deleteTask } from "../api/deleteTask";
 import Loading from "../components/Loading";
 import { fetchImportantTasks } from "../api/fetchImportantTasks";
 import EmptyPage from "../components/EmptyPage";
+import { setCompleted } from "../api/setCompleted";
+import { FaRegStar } from "react-icons/fa";
 
 export function ImportantTasks() {
     const [todos, setTodos] = useState([]);
@@ -55,20 +57,35 @@ export function ImportantTasks() {
         }
     }
 
+    const markAsCompleted = async (todoId) => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            await setCompleted(todoId);
+            fetchData();
+        } catch (error) {
+            console.error("Error marking todo as completed:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     return (
         <motion.div
             initial={fade}
             animate={fadeIn}
             exit={fadeOut}
             transition={pageTransition}
-            className="w-full h-screen"
+            className="w-full h-screen p-10 flex flex-col gap-[3rem]"
         >
+            <h1 className="text-3xl font-inter font-semibold flex flex-row items-center gap-2 text-gray-500"><FaRegStar />Important</h1>
+
             {todos.length === 0 && (
                 <EmptyPage />
             )}
-            <div className='grid grid-cols-1 gap-4 w-full p-10 overflow-y-auto'>
+            <div className='grid grid-cols-1 gap-4 w-full overflow-y-auto'>
                 {todos.map(todo =>
-                    <TaskCard key={todo.id} todo={todo} handleTodoDelete={() => handleTodoDelete(todo.id)} />
+                    <TaskCard key={todo.id} todo={todo} markAsCompleted={() => markAsCompleted(todo.id)} handleTodoDelete={() => handleTodoDelete(todo.id)} />
                 )
                 }
             </div>

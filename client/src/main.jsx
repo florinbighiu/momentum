@@ -11,6 +11,7 @@ import TodayTasks from './pages/TodayTasks';
 import { UpcomingTasks } from './pages/UpcomingTasks';
 import { ImportantTasks } from './pages/ImportantTasks';
 import AllTaks from './pages/AllTasks';
+import { CompletedTasks } from './pages/CompletedTaks';
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
           { path: "/all", element: <AllTaks /> },
           { path: "/upcoming", element: <UpcomingTasks /> },
           { path: "/important", element: <ImportantTasks /> },
-
+          { path: "/completed", element: <CompletedTasks /> },
         ]
       },
 

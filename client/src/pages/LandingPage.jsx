@@ -29,7 +29,7 @@ export default function LandingPage() {
                 <div className="px-6 pt-14 lg:px-8">
                     <div className="w-full py-8">
                         <div className="text-center">
-                            
+
 
                             <h1 className="text-4xl w-full font-bold tracking-tight text-gray-300 sm:text-6xl">
                                 The easiest way to schedule your tasks.
@@ -38,7 +38,7 @@ export default function LandingPage() {
                                 Make and account and start managing your tasks in less than a
                                 minute.
                             </p>
-                            
+
                         </div>
                         <div className="mt-10 flex items-center justify-center gap-x-6">
                             <Link
@@ -46,12 +46,6 @@ export default function LandingPage() {
                                 className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
                                 Get started
-                            </Link>
-                            <Link
-                                href="#"
-                                className="text-sm font-semibold hover:underline leading-6 text-gray-200"
-                            >
-                                Learn more <span aria-hidden="true">→</span>
                             </Link>
                         </div>
                     </div>
