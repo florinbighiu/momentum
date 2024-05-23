@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { TbCalendarClock, TbSmartHome } from "react-icons/tb";
 import { SignedIn, OrganizationSwitcher, UserButton } from "@clerk/clerk-react";
 import { motion } from 'framer-motion';
@@ -27,36 +27,62 @@ export default function Sidebar() {
                 <div className="flex flex-row md:flex-col h-full w-full space-y-12">
                     <div className="w-full">
                         <ul className="space-y-2 flex flex-row sm:flex-col text-gray-300 font-medium w-fit">
-                            <Link to="/todos">
-                                <li className="hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3">
-                                    <BsSun />
-                                    My day
-                                </li>
-                            </Link>
-                            <Link to="/upcoming">
-                                <li className="hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3">
-                                    <TbCalendarClock />
-                                    Upcoming schedule
-                                </li>
-                            </Link>
-                            <Link to="/important">
-                                <li className="hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3">
-                                    <FaRegStar />
-                                    Important
-                                </li>
-                            </Link>
-                            <Link to="/completed">
-                                <li className="hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3">
-                                    <IoCloudDoneOutline />
-                                    Completed
-                                </li>
-                            </Link>
-                            <Link to="/all">
-                                <li className="hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3">
-                                    <TbSmartHome />
-                                    All tasks
-                                </li>
-                            </Link>
+                            <NavLink
+                                to="/todos"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "hover:bg-gray-300 bg-gray-300 bg-opacity-15 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3 active"
+                                        : "hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3"
+                                }
+                            >
+                                <BsSun />
+                                My day
+                            </NavLink>
+                            <NavLink
+                                to="/upcoming"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "hover:bg-gray-300 bg-gray-300 bg-opacity-15 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3 active"
+                                        : "hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3"
+                                }
+                            >
+                                <TbCalendarClock />
+                                Upcoming schedule
+
+                            </NavLink>
+                            <NavLink
+                                to="/important"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "hover:bg-gray-300 bg-gray-300 bg-opacity-15 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3 active"
+                                        : "hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3"
+                                }
+                            >
+                                <FaRegStar />
+                                Important
+                            </NavLink>
+                            <NavLink
+                                to="/completed"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "hover:bg-gray-300 bg-gray-300 bg-opacity-15 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3 active"
+                                        : "hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3"
+                                }
+                            >
+                                <IoCloudDoneOutline />
+                                Completed
+                            </NavLink>
+                            <NavLink
+                                to="/all"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "hover:bg-gray-300 bg-gray-300 bg-opacity-15 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3 active"
+                                        : "hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3"
+                                }
+                            >
+                                <TbSmartHome />
+                                All tasks
+                            </NavLink>
                         </ul>
                     </div>
                 </div>

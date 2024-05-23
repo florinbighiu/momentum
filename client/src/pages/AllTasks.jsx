@@ -86,7 +86,7 @@ const AllTaks = () => {
     if (error) return <p>Error: {error.message}</p>;
 
     return (
-        <div className="flex flex-col gap-2 justify-start items-center mt-5 w-full">
+        <div className="flex flex-col gap-2 justify-start items-center mt-5 h-screen w-full">
             <TodoForm handleTodoCreate={fetchData} organizationId={organizationId} userId={userId} />
             {tasks.length === 0 ?
                 <EmptyPage /> : (
@@ -105,5 +105,3 @@ const AllTaks = () => {
 };
 
 export default AllTaks;
-
-

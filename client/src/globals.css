@@ -7,9 +7,10 @@ body {
     overflow: hidden;
 }
 
-label, input {
-font-family:'Bahnschrift';
-font-weight: 500;
+label,
+input {
+    font-family: 'Bahnschrift';
+    font-weight: 500;
 
 }
 
@@ -21,4 +22,22 @@ font-weight: 500;
 #landing {
     background: rgb(122, 72, 137);
     background: radial-gradient(circle, rgba(122, 72, 137, 1) 11%, rgba(54, 35, 73, 1) 69%, rgba(31, 22, 51, 1) 100%);
+}
+
+* {
+    scrollbar-width: auto;
+    scrollbar-color: #99a0b6 inherit;
+}
+
+*::-webkit-scrollbar {
+    width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+    background: inherit;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #8b90a3;
+    border-radius: 20px;
 }
