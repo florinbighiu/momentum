@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
 import { createTodo } from '../api/createTask';
-import Button from "./Button"
 import { IoClose } from "react-icons/io5";
 import { MdAdd } from "react-icons/md";
 import { motion } from 'framer-motion';
-import { fadeOut, pageTransition, fade, fadeIn } from "../utils/framer";
+import { fadeOut, formTransition, fade, fadeIn } from "../utils/framer";
 
 const TodoForm = ({ handleTodoCreate, organizationId, userId }) => {
     const [showForm, setShowForm] = useState(false);
@@ -32,6 +31,9 @@ const TodoForm = ({ handleTodoCreate, organizationId, userId }) => {
 
     const toggleForm = () => setShowForm(!showForm);
 
+    const isAnyFieldEmpty = () => todoData.name === '' || todoData.description === '' || todoData.dueDate === '';
+
+
     return (
         <div className="flex flex-col space-y-2">
             <div >
@@ -45,9 +47,9 @@ const TodoForm = ({ handleTodoCreate, organizationId, userId }) => {
                     initial={fade}
                     animate={fadeIn}
                     exit={fadeOut}
-                    transition={pageTransition}
+                    transition={formTransition}
                 >
-                    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50">
+                    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 z-50">
                         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-1 border border-gray-200/75 lg:w-3/12 bg-white rounded-xl shadow-md">
                             <div className='flex flex-row items-center justify-between w-full '>
                                 <h2 className="text-center font-bahn font-semibold my-3 px-5">Upload your task here</h2>
@@ -96,10 +98,10 @@ const TodoForm = ({ handleTodoCreate, organizationId, userId }) => {
                                         required
                                     />
                                 </div>
-                                <div className="flex flex-col space-y-3 py-4">
-                                    <Button type="submit" onClick={handleSubmit}>
+                                <div className="flex w-full justify-end">
+                                    <button type="submit" disabled={isAnyFieldEmpty()} onClick={handleSubmit} className={`bg-gray-800 ${!isAnyFieldEmpty() ? 'hover:bg-gray-700' : ''} text-sm text-gray-200 py-1.5 px-5 rounded-lg ${isAnyFieldEmpty() ? 'bg-opacity-50 cursor-not-allowed' : ''}`}>
                                         Create
-                                    </Button>
+                                    </button>
                                 </div>
                             </form>
                         </div>

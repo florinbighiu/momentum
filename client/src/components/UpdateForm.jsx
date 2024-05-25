@@ -11,7 +11,7 @@ const UpdateForm = ({ initialValues, onSubmit, onClose }) => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
     };
 
-   const handleUpdate = async (taskId, formData) => {
+    const handleUpdate = async (taskId, formData) => {
         try {
             await updateTask(taskId, formData);
             onSubmit();
@@ -21,7 +21,6 @@ const UpdateForm = ({ initialValues, onSubmit, onClose }) => {
         }
     };
 
-   
     return (
         <motion.div
             ref={formRef}
@@ -31,7 +30,7 @@ const UpdateForm = ({ initialValues, onSubmit, onClose }) => {
             transition={{ duration: 0.3 }}
             className="fixed right-0 top-0 h-screen w-1/3 z-50 flex justify-end"
         >
-            <div className="bg-white border shadow-lg rounded-lg p-4 w-3/4 max-w-md">
+            <div className="bg-white border shadow-lg p-4 w-3/4 max-w-md">
                 <h3 className="text-xl font-semibold mb-4">Update Task</h3>
                 <form>
                     <div className="mb-4">
@@ -44,7 +43,7 @@ const UpdateForm = ({ initialValues, onSubmit, onClose }) => {
                             id="name"
                             value={formData.name}
                             onChange={handleInputChange}
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400"
                             required
                         />
                     </div>
@@ -58,21 +57,21 @@ const UpdateForm = ({ initialValues, onSubmit, onClose }) => {
                             rows={5}
                             value={formData.description}
                             onChange={handleInputChange}
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400"
                         />
                     </div>
-                    <div className="flex justify-end">
+                    <div className="flex items-center justify-end ">
                         <button
                             type="button"
                             onClick={onClose}
-                            className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg mr-2"
+                            className="bg-gray-400 hover:bg-gray-500 text-white py-2 px-4 rounded-lg     mr-2"
                         >
                             Cancel
                         </button>
                         <button
                             type="button"
                             onClick={() => handleUpdate(formData.id, formData)}
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
+                            className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
                         >
                             Update
                         </button>

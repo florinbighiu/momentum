@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useGetUserId } from '../hooks/getUserId';
 import { useGetUserOrgId } from '../hooks/getUserOrgId';
 import TodoForm from '../components/TodoForm';
-import TodoCard from '../components/TaskCard';
+import TaskCard from '../components/TaskCard';
 import Loading from '../components/Loading';
 import { deleteTask } from '../api/deleteTask';
 import { markAsImportant } from '../api/markAsImportant';
@@ -17,6 +17,7 @@ const AllTaks = () => {
     const [tasks, setTasks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [showForm, setShowForm] = useState(false);
 
     useEffect(() => {
         fetchData();
@@ -38,6 +39,9 @@ const AllTaks = () => {
         }
     };
 
+    const handleTodoUpdate = () => {
+        setShowForm(!showForm);
+    }
 
     const setImportantState = async (todoId) => {
         setIsLoading(true);
@@ -92,7 +96,7 @@ const AllTaks = () => {
                 <EmptyPage /> : (
                     <div className='flex flex-col justify-start gap-4 p-10 w-full overflow-y-auto'>
                         {tasks.map(todo => (
-                            <TodoCard key={todo.id} todo={todo} markAsCompleted={() => markAsCompleted(todo.id)} markAsImportant={() => setImportantState(todo.id)} handleTodoDelete={() => handleTodoDelete(todo.id)} />
+                            <TaskCard key={todo.id} onSubmit={fetchData} onClose={() => setShowForm(false)} todo={todo} handleTodoUpdate={handleTodoUpdate} markAsCompleted={() => markAsCompleted(todo.id)} markAsImportant={() => setImportantState(todo.id)} handleTodoDelete={() => handleTodoDelete(todo.id)} />
                         ))}
                     </div>
                 )

@@ -26,7 +26,7 @@ export default function Sidebar() {
                 </Link>
                 <div className="flex flex-row md:flex-col h-full w-full space-y-12">
                     <div className="w-full">
-                        <ul className="space-y-2 flex flex-row sm:flex-col text-gray-300 font-medium w-fit">
+                        <ul className="space-y-1 flex flex-row sm:flex-col text-gray-300 font-medium w-fit">
                             <NavLink
                                 to="/todos"
                                 className={({ isActive }) =>

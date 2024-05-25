@@ -31,7 +31,7 @@ export default function LandingPage() {
                         <div className="text-center">
 
 
-                            <h1 className="text-4xl w-full font-bold tracking-tight text-gray-300 sm:text-6xl">
+                            <h1 className="w-full font-bold bg-gradient-to-r from-rose-100 to-teal-100 bg-clip-text text-4xl uppercase tracking-tighter text-transparent sm:text-6xl">
                                 The easiest way to schedule your tasks.
                             </h1>
                             <p className="mt-6 text-lg leading-8 text-gray-300">

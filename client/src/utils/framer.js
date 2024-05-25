@@ -3,22 +3,7 @@ export const pageTransition = {
   ease: "easeInOut",
 };
 
-export const formEntrance = {
-  from: {
-    opacity: 0,
-    scale: 0.8,
-    x: 0,
-    y: 0,
-  },
-  to: {
-    opacity: 1,
-    scale: 1,
-    x: 0,
-    y: 0,
-  },
-  duration: 1,
-  ease: "easeInOut",
-};
+
 
 export const formTransition = {
   duration: 0.1,
