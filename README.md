@@ -41,7 +41,5 @@ Start the server
 
 ## Demo
 
-Insert gif or link to demo
-
 ![Screenshot 2024-05-25 170315](https://github.com/florinbighiu/momentum/assets/120215264/1507e173-8012-4881-985c-48372f64a7af)
 
