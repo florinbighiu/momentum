@@ -35,9 +35,9 @@ const TodoForm = ({ handleTodoCreate, organizationId, userId }) => {
 
 
     return (
-        <div className="flex flex-col space-y-2">
+        <div className="flex flex-col">
             <div >
-                <button className='w-full flex items-center gap-2 justify-center border rounded-md py-2 px-4 bg-white hover:bg-gray-100 bg-opacity-25 backdrop-blur-md cursor-pointer' onClick={toggleForm}>
+                <button className='w-full flex items-center gap-2 justify-center border rounded-lg py-2 px-4 bg-white hover:bg-gray-100 bg-opacity-25 backdrop-blur-md cursor-pointer' onClick={toggleForm}>
                     <MdAdd className="text-xl" />
                     <span className="text-gray-600 font-bahn text-md font-semibold">New task</span>
                 </button>
@@ -50,7 +50,7 @@ const TodoForm = ({ handleTodoCreate, organizationId, userId }) => {
                     transition={formTransition}
                 >
                     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 z-50">
-                        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-1 border border-gray-200/75 lg:w-3/12 bg-white rounded-xl shadow-md">
+                        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-1 border border-gray-200/75 lg:w-3/12 bg-white rounded-xl">
                             <div className='flex flex-row items-center justify-between w-full '>
                                 <h2 className="text-center font-bahn font-semibold my-3 px-5">Upload your task here</h2>
                                 <button className="font-bold bg-gray-200 bg-opacity-55 hover:bg-gray-300 rounded-full p-1 mr-1" onClick={toggleForm}><IoClose /></button>

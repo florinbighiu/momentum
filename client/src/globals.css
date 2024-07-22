@@ -14,10 +14,10 @@ input {
 
 }
 
-#sidebar {
+/* #sidebar {
     background: rgb(94, 51, 108);
     background: linear-gradient(118deg, rgba(94, 51, 108, 1) 25%, rgba(42, 21, 48, 1) 95%);
-}
+} */
 
 #landing {
     background: rgb(122, 72, 137);

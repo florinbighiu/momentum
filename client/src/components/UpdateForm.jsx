@@ -21,6 +21,9 @@ const UpdateForm = ({ initialValues, onSubmit, onClose }) => {
         }
     };
 
+    const isAnyFieldEmpty = () => formData.name === '' || formData.description === '';
+
+
     return (
         <motion.div
             ref={formRef}
@@ -64,14 +67,15 @@ const UpdateForm = ({ initialValues, onSubmit, onClose }) => {
                         <button
                             type="button"
                             onClick={onClose}
-                            className="bg-gray-400 hover:bg-gray-500 text-white py-2 px-4 rounded-lg     mr-2"
+                            className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg     mr-2"
                         >
                             Cancel
                         </button>
                         <button
                             type="button"
                             onClick={() => handleUpdate(formData.id, formData)}
-                            className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
+                            disabled={isAnyFieldEmpty()}
+                            className={`bg-blue-500  text-white py-2 px-4 rounded-lg ${isAnyFieldEmpty() ? 'bg-opacity-50 cursor-not-allowed' : ''}`}
                         >
                             Update
                         </button>

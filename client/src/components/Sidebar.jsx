@@ -17,7 +17,7 @@ export default function Sidebar() {
             exit={fadeOut}
             transition={pageTransition}
         >
-            <div id="sidebar" className="sm:w-64 w-full sm:h-screen bg-transparent flex sm:flex-col flex-row justify-around items-center p-4">
+            <div id="sidebar" className="sm:w-full w-full sm:h-screen bg-gradient-to-r from-emerald-700 to-emerald-900 flex sm:flex-col flex-row justify-around items-center p-4">
                 <Link to="/">
                     <div className="flex flex-row items-center w-full justify-center mb-32 text-2xl font-semibold gap-1">
                         <img src={logo} alt="logo" className="w-8" />
