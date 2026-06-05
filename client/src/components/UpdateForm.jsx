@@ -115,7 +115,7 @@ export default function UpdateForm({ initialValues, onClose }) {
                 </div>
 
                 {/* Footer */}
-                <div className="px-5 py-4 border-t border-gray-200 flex gap-2 shrink-0 bg-white">
+                <div className="px-5 py-4 border-t border-gray-200 flex gap-2 shrink-0 bg-gray-100">
                     <button onClick={onClose}
                         className="flex-1 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors">
                         Cancel

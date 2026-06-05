@@ -46,7 +46,7 @@ const TodoForm = forwardRef(function TodoForm({ userId, organizationId }, ref) {
                 className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors"
             >
                 <TbPlus className="w-4 h-4" strokeWidth={2.5} />
-                New Task
+                New task
             </button>
 
             <AnimatePresence>
