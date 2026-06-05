@@ -66,7 +66,7 @@ export default function UpdateForm({ initialValues, onClose }) {
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: "100%", opacity: 0 }}
                 transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
-                className="fixed right-0 top-0 h-screen w-80 z-50 bg-white border-l border-gray-200 shadow-xl flex flex-col"
+                className="fixed right-0 top-0 h-dvh w-full sm:w-80 z-50 bg-white border-l border-gray-200 shadow-xl flex flex-col"
             >
                 {/* Header */}
                 <div className="flex items-center justify-between px-5 h-14 border-b border-gray-200 shrink-0 bg-gray-100">

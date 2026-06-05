@@ -56,7 +56,7 @@ const TodoForm = forwardRef(function TodoForm({ userId, organizationId }, ref) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.15 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+                        className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm"
                         onMouseDown={(e) => e.target === e.currentTarget && close()}
                     >
                         <motion.div
@@ -64,7 +64,7 @@ const TodoForm = forwardRef(function TodoForm({ userId, organizationId }, ref) {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.96, y: 8 }}
                             transition={{ duration: 0.18 }}
-                            className="w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-xl p-6 mx-4"
+                            className="w-full max-w-md bg-white border border-gray-200 rounded-t-2xl sm:rounded-2xl shadow-xl p-6 mx-0 sm:mx-4 max-h-[90dvh] overflow-y-auto"
                         >
                             <div className="flex items-center justify-between mb-5">
                                 <h2 className="text-base font-bold text-gray-900">New task</h2>
