@@ -1,115 +1,127 @@
-/* eslint-disable react/prop-types */
-import { useState } from 'react';
-import { createTodo } from '../api/createTask';
-import { IoClose } from "react-icons/io5";
-import { MdAdd } from "react-icons/md";
-import { motion } from 'framer-motion';
-import { fadeOut, formTransition, fade, fadeIn } from "../utils/framer";
+﻿/* eslint-disable react/prop-types */
+import { forwardRef, useImperativeHandle, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { TbPlus, TbX } from "react-icons/tb";
+import { useQueryClient } from "react-query";
+import { createTodo } from "../api/createTask";
+import { DatePicker } from "./DatePicker";
 
-const TodoForm = ({ handleTodoCreate, organizationId, userId }) => {
-    const [showForm, setShowForm] = useState(false);
-    const [todoData, setTodoData] = useState({ name: '', description: '', dueDate: '' });
+const EMPTY = { name: "", description: "", dueDate: "", priority: "MEDIUM" };
 
-    const handleChange = (event) => {
-        setTodoData({ ...todoData, organizationId, userId, [event.target.name]: event.target.value });
-    };
+const inputCls = "w-full bg-gray-100 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all";
+const labelCls = "block text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-1.5";
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+const TodoForm = forwardRef(function TodoForm({ userId, organizationId }, ref) {
+    const [open, setOpen] = useState(false);
+    const [data, setData] = useState(EMPTY);
+    const [submitting, setSubmitting] = useState(false);
+    const qc = useQueryClient();
+
+    useImperativeHandle(ref, () => ({ openForm: () => setOpen(true) }));
+
+    const handleChange = (e) => setData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+
+    const close = () => { setOpen(false); setData(EMPTY); };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitting(true);
         try {
-            await createTodo(todoData);
-            setShowForm(false);
-            setTodoData({ name: '', desc: '', dueDate: '' });
-
-            if (handleTodoCreate) {
-                handleTodoCreate();
-            }
-        } catch (error) {
-            console.error("Error creating todo:", error);
+            await createTodo({ ...data, organizationId, userId });
+            qc.invalidateQueries(["todos"]);
+            close();
+        } catch (err) {
+            console.error("Error creating task:", err);
+        } finally {
+            setSubmitting(false);
         }
     };
 
-    const toggleForm = () => setShowForm(!showForm);
-
-    const isAnyFieldEmpty = () => todoData.name === '' || todoData.description === '' || todoData.dueDate === '';
-
+    const isEmpty = !data.name.trim() || !data.dueDate;
 
     return (
-        <div className="flex flex-col">
-            <div >
-                <button className='w-full flex items-center gap-2 justify-center border rounded-lg py-2 px-4 bg-white hover:bg-gray-100 bg-opacity-25 backdrop-blur-md cursor-pointer' onClick={toggleForm}>
-                    <MdAdd className="text-xl" />
-                    <span className="text-gray-600 font-bahn text-md font-semibold">New task</span>
-                </button>
-            </div>
-            {showForm && (
-                <motion.div
-                    initial={fade}
-                    animate={fadeIn}
-                    exit={fadeOut}
-                    transition={formTransition}
-                >
-                    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 z-50">
-                        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-1 border border-gray-200/75 lg:w-3/12 bg-white rounded-xl">
-                            <div className='flex flex-row items-center justify-between w-full '>
-                                <h2 className="text-center font-bahn font-semibold my-3 px-5">Upload your task here</h2>
-                                <button className="font-bold bg-gray-200 bg-opacity-55 hover:bg-gray-300 rounded-full p-1 mr-1" onClick={toggleForm}><IoClose /></button>
+        <>
+            <button
+                onClick={() => setOpen(true)}
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors"
+            >
+                <TbPlus className="w-4 h-4" strokeWidth={2.5} />
+                New Task
+            </button>
+
+            <AnimatePresence>
+                {open && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.15 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+                        onMouseDown={(e) => e.target === e.currentTarget && close()}
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.96, y: 8 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.96, y: 8 }}
+                            transition={{ duration: 0.18 }}
+                            className="w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-xl p-6 mx-4"
+                        >
+                            <div className="flex items-center justify-between mb-5">
+                                <h2 className="text-base font-bold text-gray-900">New task</h2>
+                                <button onClick={close} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-900 transition-colors">
+                                    <TbX className="w-4 h-4" />
+                                </button>
                             </div>
-                            <form onSubmit={handleSubmit} className="flex flex-col font-inter space-y-5 py-6 p-5">
-                                <div className='flex flex-col space-y-1'>
-                                    <label htmlFor="name" className="text-sm">
-                                        Task name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        value={todoData.name}
-                                        onChange={handleChange}
-                                        className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        required
-                                    />
+
+                            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                                <div>
+                                    <label className={labelCls}>Task name *</label>
+                                    <input name="name" type="text" value={data.name} onChange={handleChange}
+                                        placeholder="What needs to be done?" className={inputCls} autoFocus required />
                                 </div>
-                                <div className='flex flex-col space-y-1'>
-                                    <label htmlFor="name" className="text-sm">
-                                        Description
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="description"
-                                        name="description"
-                                        value={todoData.description}
-                                        onChange={handleChange}
-                                        className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        required
-                                    />
+                                <div>
+                                    <label className={labelCls}>Description</label>
+                                    <textarea name="description" value={data.description} onChange={handleChange}
+                                        placeholder="Add details..." rows={3}
+                                        className={`${inputCls} resize-none`} />
                                 </div>
-                                <div className='flex flex-col space-y-1'>
-                                    <label htmlFor="name" className="text-sm">
-                                        Due date
-                                    </label>
-                                    <input
-                                        type="date"
-                                        id="dueDate"
-                                        name="dueDate"
-                                        value={todoData.dueDate}
-                                        onChange={handleChange}
-                                        className="rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        required
-                                    />
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label className={labelCls}>Due date *</label>
+                                        <DatePicker
+                                            value={data.dueDate}
+                                            onChange={(val) => setData(prev => ({ ...prev, dueDate: val }))}
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className={labelCls}>Priority</label>
+                                        <select name="priority" value={data.priority} onChange={handleChange} className={inputCls}>
+                                            <option value="LOW">Low</option>
+                                            <option value="MEDIUM">Medium</option>
+                                            <option value="HIGH">High</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div className="flex w-full justify-end">
-                                    <button type="submit" disabled={isAnyFieldEmpty()} onClick={handleSubmit} className={`bg-gray-800 ${!isAnyFieldEmpty() ? 'hover:bg-gray-700' : ''} text-sm text-gray-200 py-1.5 px-5 rounded-lg ${isAnyFieldEmpty() ? 'bg-opacity-50 cursor-not-allowed' : ''}`}>
-                                        Create
+
+                                <div className="flex justify-end gap-2 pt-2 border-t border-gray-200">
+                                    <button type="button" onClick={close}
+                                        className="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" disabled={isEmpty || submitting}
+                                        className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium text-white transition-colors ${isEmpty || submitting ? "bg-blue-600/40 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}>
+                                        <TbPlus className="w-4 h-4" />
+                                        {submitting ? "Creating..." : "Create task"}
                                     </button>
                                 </div>
                             </form>
-                        </div>
-                    </div>
-                </motion.div>
-            )}
-        </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </>
     );
-};
+});
 
 export default TodoForm;

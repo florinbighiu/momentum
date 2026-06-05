@@ -1,12 +1,7 @@
-
-const Loading = () => {
+﻿export default function Loading() {
     return (
-        <div className="min-h-screen w-full flex items-center justify-center">
-            <div className="flex flex-col items-center">
-                <div className="w-16 h-16 border-t-4 border-b-4 border-rose-500 rounded-full animate-spin"></div>
-            </div>
+        <div className="flex-1 flex items-center justify-center h-full bg-white">
+            <div className="w-5 h-5 border-2 border-gray-200 border-t-accent rounded-full animate-spin" />
         </div>
     );
-};
-
-export default Loading;
+}

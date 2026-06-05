@@ -5,6 +5,7 @@ import com.manifest.repository.TodoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -67,18 +68,15 @@ public class TodoServiceImpl implements TodoService {
     private void updateTodoFields(Todo todo, Map<String, Object> updates) {
         for (String key : updates.keySet()) {
             switch (key) {
-                case "name":
-                    todo.setName((String) updates.get(key));
-                    break;
-                case "completed":
-                    todo.setCompleted((Boolean) updates.get(key));
-                    break;
-                case "important":
-                    todo.setImportant((Boolean) updates.get(key));
-                    break;
-                case "description":
-                    todo.setDescription((String) updates.get(key));
-                    break;
+                case "name"        -> todo.setName((String) updates.get(key));
+                case "description" -> todo.setDescription((String) updates.get(key));
+                case "priority"    -> todo.setPriority((String) updates.get(key));
+                case "completed"   -> todo.setCompleted((Boolean) updates.get(key));
+                case "important"   -> todo.setImportant((Boolean) updates.get(key));
+                case "dueDate"     -> {
+                    String raw = (String) updates.get(key);
+                    todo.setDueDate(raw != null ? LocalDate.parse(raw) : null);
+                }
             }
         }
     }

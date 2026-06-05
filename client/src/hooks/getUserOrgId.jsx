@@ -1,4 +1,4 @@
-import { useAuth } from "@clerk/clerk-react";
+﻿import { useAuth } from "@clerk/clerk-react";
 
 export const useGetUserOrgId = () => {
   const user = useAuth();
@@ -6,3 +6,4 @@ export const useGetUserOrgId = () => {
 
   return orgId;
 };
+

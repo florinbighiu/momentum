@@ -1,9 +1,6 @@
-import { FaRegStar } from "react-icons/fa";
 import { TasksList } from "../components/TasksList";
-import { fetchImportantTasks } from "../api/fetchImportantTasks";
+import { TbStar } from "react-icons/tb";
 
 export function ImportantTasks() {
-    return (
-        <TasksList icon={<FaRegStar />} name={"Important"} handleFetchData={fetchImportantTasks} />
-    );
+    return <TasksList icon={<TbStar />} name="Important" filter={t => t.important && !t.completed} />;
 }

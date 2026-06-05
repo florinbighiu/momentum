@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+﻿import { useState, useCallback } from "react";
 
 let nextId = 0;
 
@@ -17,3 +17,4 @@ export function useToast(duration = 3000) {
 
     return { toasts, toast, dismiss };
 }
+

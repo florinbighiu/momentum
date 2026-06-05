@@ -1,9 +1,20 @@
-import { SignIn } from "@clerk/clerk-react"
+﻿import { SignIn } from "@clerk/clerk-react";
 
 export default function SignInPage() {
     return (
-        <div className="flex items-center justify-center w-full h-screen">
-            <SignIn path="/sign-in" />
+        <div className="flex items-center justify-center w-full min-h-screen bg-gray-50">
+            <SignIn path="/sign-in" appearance={{
+                variables: {
+                    colorBackground: "#ffffff",
+                    colorInputBackground: "#f9fafb",
+                    colorInputText: "#111827",
+                    colorText: "#111827",
+                    colorTextSecondary: "#6b7280",
+                    colorPrimary: "#2563eb",
+                    colorNeutral: "#6b7280",
+                    borderRadius: "0.75rem",
+                },
+            }} />
         </div>
-    )
+    );
 }

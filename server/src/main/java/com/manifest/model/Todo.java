@@ -26,6 +26,8 @@ public class Todo {
     private boolean completed;
     private LocalDate dueDate;
 
+    private String priority; // LOW | MEDIUM | HIGH
+
     private String userId;
     private String organizationId;
 
