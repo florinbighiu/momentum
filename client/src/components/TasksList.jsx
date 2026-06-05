@@ -1,7 +1,8 @@
 ﻿/* eslint-disable react/prop-types */
 import { useRef, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { TbLayoutGrid, TbList, TbAlertTriangle, TbRefresh } from "react-icons/tb";
+import { TbLayoutGrid, TbList, TbAlertTriangle, TbRefresh, TbMenu2 } from "react-icons/tb";
 import TaskCard from "./TaskCard";
 import { useGetUserId } from "../hooks/getUserId";
 import { useGetUserOrgId } from "../hooks/getUserOrgId";
@@ -33,17 +34,18 @@ function StatChip({ label, value, variant = "default" }) {
     );
 }
 
-/* optional client-side filter â€” pages can pass a predicate to narrow results */
+/* optional client-side filter — pages can pass a predicate to narrow results */
 export function TasksList({ icon, name, handleFetchData, filter }) {
     const [search, setSearch] = useState("");
     const [view, setView]     = useState("grid");
+    const { onMenuClick } = useOutletContext() ?? {};
     const { toasts, toast, dismiss } = useToast();
     const formRef = useRef(null);
 
     const userId         = useGetUserId();
     const organizationId = useGetUserOrgId();
 
-    /* React Query â€” all pages share the same cache key */
+    /* React Query â€" all pages share the same cache key */
     const { data: todos = [], isLoading, isError, error, refetch } = useTodos(userId, organizationId);
 
     const deleteMut    = useDeleteTodo(userId, organizationId);
@@ -104,15 +106,20 @@ export function TasksList({ icon, name, handleFetchData, filter }) {
     return (
         <div className="flex flex-col h-full bg-white overflow-hidden">
             {/* Header */}
-            <div className="px-6 pt-6 pb-4 border-b border-gray-200 shrink-0">
-                <div className="flex items-start justify-between gap-4 mb-4">
+            <div className="px-4 sm:px-6 pt-4 sm:pt-6 pb-4 border-b border-gray-200 shrink-0">
+                <div className="flex flex-wrap items-center gap-y-3 gap-x-4 mb-4">
                     <div className="flex items-center gap-2.5">
+                        {onMenuClick && (
+                            <button onClick={onMenuClick} className="lg:hidden p-1.5 -ml-1 rounded-lg hover:bg-gray-100 transition-colors">
+                                <TbMenu2 className="w-5 h-5 text-gray-500" />
+                            </button>
+                        )}
                         <span className="text-gray-400">{icon}</span>
                         <h1 className="text-xl font-bold text-gray-900 tracking-tight">{name}</h1>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 ml-auto w-full sm:w-auto">
                         <SearchBar value={search} onChange={setSearch} />
-                        <div className="flex items-center bg-gray-100 border border-gray-200 rounded-lg p-0.5 gap-0.5">
+                        <div className="flex items-center bg-gray-100 border border-gray-200 rounded-lg p-0.5 gap-0.5 shrink-0">
                             <button onClick={() => setView("grid")}
                                 className={`p-1.5 rounded-md transition-colors ${view === "grid" ? "bg-white shadow-sm text-gray-900" : "text-gray-400 hover:text-gray-600"}`}>
                                 <TbLayoutGrid className="w-3.5 h-3.5" />

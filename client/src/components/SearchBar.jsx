@@ -3,7 +3,7 @@ import { TbSearch, TbX } from "react-icons/tb";
 
 export default function SearchBar({ value, onChange }) {
     return (
-        <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-all w-44
+        <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-all flex-1 sm:w-44 sm:flex-none
             ${value
                 ? "bg-white border-gray-300 shadow-sm"
                 : "bg-gray-100 border-gray-200 hover:border-gray-300"

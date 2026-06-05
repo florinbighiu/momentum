@@ -1,7 +1,8 @@
-﻿import { useTodos } from "../hooks/useTodos";
+﻿import { useOutletContext } from "react-router-dom";
+import { useTodos } from "../hooks/useTodos";
 import { useGetUserId } from "../hooks/getUserId";
 import { useGetUserOrgId } from "../hooks/getUserOrgId";
-import { TbChartBar, TbCheck, TbAlertTriangle, TbStar, TbClock } from "react-icons/tb";
+import { TbChartBar, TbCheck, TbAlertTriangle, TbStar, TbClock, TbMenu2 } from "react-icons/tb";
 import Loading from "../components/Loading";
 
 function Ring({ pct, size = 80, stroke = 7, color = "#6366f1" }) {
@@ -55,6 +56,7 @@ function Bar({ label, count, total, color }) {
 }
 
 export default function StatsPage() {
+    const { onMenuClick } = useOutletContext() ?? {};
     const userId         = useGetUserId();
     const organizationId = useGetUserOrgId();
     const { data: todos = [], isLoading } = useTodos(userId, organizationId);
@@ -83,8 +85,13 @@ export default function StatsPage() {
     return (
         <div className="flex flex-col h-full bg-white overflow-hidden">
             {/* header */}
-            <div className="px-6 pt-6 pb-4 border-b border-gray-200 shrink-0">
+            <div className="px-4 sm:px-6 pt-4 sm:pt-6 pb-4 border-b border-gray-200 shrink-0">
                 <div className="flex items-center gap-2.5">
+                    {onMenuClick && (
+                        <button onClick={onMenuClick} className="lg:hidden p-1.5 -ml-1 rounded-lg hover:bg-gray-100 transition-colors">
+                            <TbMenu2 className="w-5 h-5 text-gray-500" />
+                        </button>
+                    )}
                     <span className="text-gray-400"><TbChartBar className="w-5 h-5" /></span>
                     <h1 className="text-xl font-bold text-gray-900 tracking-tight">Stats</h1>
                 </div>

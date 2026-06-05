@@ -6,6 +6,7 @@ import Sidebar from "../components/Sidebar";
 export default function DashboardLayout() {
     const { userId, isLoaded } = useAuth();
     const navigate = useNavigate();
+    const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
     React.useEffect(() => {
         if (isLoaded && !userId) navigate("/sign-in");
@@ -19,9 +20,15 @@ export default function DashboardLayout() {
 
     return (
         <div className="flex h-screen w-full bg-zinc-950 overflow-hidden">
-            <Sidebar />
+            {sidebarOpen && (
+                <div
+                    className="fixed inset-0 z-30 bg-black/40 lg:hidden"
+                    onClick={() => setSidebarOpen(false)}
+                />
+            )}
+            <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
             <main className="flex-1 min-w-0 overflow-hidden bg-gray-100">
-                <Outlet />
+                <Outlet context={{ onMenuClick: () => setSidebarOpen(true) }} />
             </main>
         </div>
     );

@@ -1,7 +1,7 @@
 ﻿/* eslint-disable react/prop-types */
 import { NavLink } from "react-router-dom";
 import { SignedIn, UserButton, useUser } from "@clerk/clerk-react";
-import { TbCalendarClock, TbSun, TbStar, TbCheck, TbLayoutGrid, TbChartBar } from "react-icons/tb";
+import { TbCalendarClock, TbSun, TbStar, TbCheck, TbLayoutGrid, TbChartBar, TbX } from "react-icons/tb";
 import logo from "../assets/maze.png";
 import { useGetUserId } from "../hooks/getUserId";
 import { useGetUserOrgId } from "../hooks/getUserOrgId";
@@ -55,7 +55,7 @@ function UserSection() {
     );
 }
 
-export default function Sidebar() {
+export default function Sidebar({ open, onClose }) {
     const counts = useCounts();
 
     const NAV = [
@@ -67,14 +67,19 @@ export default function Sidebar() {
     ];
 
     return (
-        <aside className="flex flex-col h-screen w-56 shrink-0 bg-blue-100 overflow-hidden">
+        <aside className={`fixed inset-y-0 left-0 z-40 flex flex-col h-screen w-64 shrink-0 bg-blue-100 overflow-hidden transition-transform duration-300 ease-in-out lg:relative lg:w-56 lg:translate-x-0 lg:z-auto ${open ? "translate-x-0" : "-translate-x-full"}`}>
             {/* Brand */}
-            <NavLink to="/" className="flex items-center gap-2.5 px-4 h-14 shrink-0">
-                <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center shrink-0 shadow-sm">
-                    <img src={logo} alt="Momentum" className="w-4 h-4 brightness-0 invert" />
-                </div>
-                <span className="text-sm font-bold text-gray-900 tracking-tight">Momentum</span>
-            </NavLink>
+            <div className="flex items-center h-14 shrink-0 px-4">
+                <NavLink to="/" onClick={onClose} className="flex items-center gap-2.5 flex-1">
+                    <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center shrink-0 shadow-sm">
+                        <img src={logo} alt="Momentum" className="w-4 h-4 brightness-0 invert" />
+                    </div>
+                    <span className="text-sm font-bold text-gray-900 tracking-tight">Momentum</span>
+                </NavLink>
+                <button onClick={onClose} className="lg:hidden p-1.5 rounded-lg hover:bg-blue-200/60 transition-colors text-gray-600">
+                    <TbX className="w-4 h-4" />
+                </button>
+            </div>
 
             {/* Nav */}
             <nav className="flex-1 px-2 py-3 overflow-y-auto">
@@ -86,6 +91,7 @@ export default function Sidebar() {
                         <li key={to}>
                             <NavLink
                                 to={to}
+                                onClick={onClose}
                                 className={({ isActive }) =>
                                     `group flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-100 ${
                                         isActive
@@ -112,6 +118,7 @@ export default function Sidebar() {
                 </p>
                 <NavLink
                     to="/stats"
+                    onClick={onClose}
                     className={({ isActive }) =>
                         `flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-100 ${
                             isActive ? "bg-blue-600 text-white" : "text-gray-700 hover:text-gray-900 hover:bg-blue-600/10"

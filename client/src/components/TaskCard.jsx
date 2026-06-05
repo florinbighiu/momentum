@@ -42,7 +42,7 @@ export default function TaskCard({ todo, markAsImportant, markAsCompleted, handl
                         <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-md border ${p.badge}`}>
                             {p.label}
                         </span>
-                        <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+                        <div className="flex items-center gap-0.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-150">
                             {!todo.completed && (
                                 <>
                                     <button
