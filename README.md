@@ -1,45 +1,65 @@
-
 # Momentum
 
-Task manager application utilizing React and Java that provides a
-user-friendly UI with user authentication and organization switching.
+A fast, keyboard-first task manager built with React and Spring Boot. Capture tasks in seconds, prioritize ruthlessly, ship everything.
 
+![Momentum UI](docs/screenshot.png)
 
-## Environment Variables
+## Tech Stack
 
-To run this project, you will need to add the following environment variables to your .env file
+**Frontend** — React 18, Vite, Tailwind CSS, Framer Motion, React Query, Clerk  
+**Backend** — Spring Boot 3, Java 21, Spring Security, JPA/Hibernate  
+**Database** — PostgreSQL (Supabase)  
+**Auth** — Clerk (JWT-based, per-user and org-scoped data)
 
-`VITE_CLERK_PUBLISHABLE_KEY`
+## Features
 
+- Grid and list views for tasks
+- Priority levels (High / Medium / Low) with color-coded stripes
+- Smart due date views — My Day, Upcoming, Important, Completed
+- Instant client-side search
+- Stats page with task analytics
+- Organization switching via Clerk
 
-## Run Locally
+## Getting Started
 
-Clone the project
+### Prerequisites
 
-```bash
-  git clone https://github.com/florinbighiu/momentum.git
-```
+- Node.js 18+
+- Java 21
+- Maven
 
-Go to the project directory
-
-```bash
-  cd momentum
-```
-
-Install dependencies
-
-```bash
-  npm install
-```
-
-Start the server
+### Frontend
 
 ```bash
-  npm run dev
+cd client
+npm install
+npm run dev
 ```
 
+### Backend
 
-## Demo
+```bash
+cd server
+./mvnw spring-boot:run
+```
 
-![Screenshot 2024-05-25 170315](https://github.com/florinbighiu/momentum/assets/120215264/1507e173-8012-4881-985c-48372f64a7af)
+### Environment Variables
 
+Create `client/.env`:
+
+```env
+VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+```
+
+## Deployment
+
+| Service | What it hosts |
+| --- | --- |
+| [Vercel](https://vercel.com) | Frontend (set root dir to `client`) |
+| [Render](https://render.com) | Backend Spring Boot service |
+| [Supabase](https://supabase.com) | PostgreSQL database |
+| [Clerk](https://clerk.com) | Authentication |
+
+## License
+
+MIT
