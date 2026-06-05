@@ -4,7 +4,15 @@ import com.manifest.model.Todo;
 import com.manifest.service.TodoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 import java.util.List;
@@ -13,12 +21,10 @@ import java.util.Map;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/todos")
-@CrossOrigin(origins = "http://localhost:5173")
 public class TodoController {
 
     private final TodoService todoService;
 
-    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping
     public ResponseEntity<List<Todo>> getTodos(@RequestParam String userId,
             @RequestParam(required = false) String organizationId) {
@@ -31,7 +37,6 @@ public class TodoController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:5173")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTodoById(@PathVariable Long id) {
         try {
@@ -42,7 +47,6 @@ public class TodoController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/create")
     public ResponseEntity<Todo> createTodo(@RequestBody Todo todo) {
         try {
