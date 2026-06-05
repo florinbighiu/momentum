@@ -2,37 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    font-family: 'Poppins', sans-serif;
+@layer base {
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+  body {
+    font-family: 'DM Sans', 'Inter', sans-serif;
+    background-color: #0e0e12;
+    color: #18181b;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  input, textarea, select, button { font-family: inherit; }
+
+  input[type="checkbox"] { accent-color: #6366f1; }
+  input[type="date"] { color-scheme: light; }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+
+  ::selection { background: rgba(99,102,241,0.25); color: inherit; }
+}
+
+/* ─── react-day-picker overrides (light theme) ───────────── */
+.rdp {
+  --rdp-accent-color: #6366f1;
+  --rdp-background-color: #eef2ff;
+  --rdp-accent-color-dark: #4f46e5;
+  --rdp-background-color-dark: #eef2ff;
+  margin: 0;
+  color: #18181b;
+}
+.rdp-months { justify-content: center; }
+.rdp-caption_label { font-size: 13px; font-weight: 600; color: #18181b; }
+.rdp-head_cell { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #a1a1aa; }
+.rdp-day { border-radius: 8px; font-size: 13px; color: #18181b; }
+.rdp-day:hover:not([disabled]):not(.rdp-day_selected) { background: #f2f2f4 !important; }
+.rdp-day_selected { background: #6366f1 !important; color: #fff !important; font-weight: 600; }
+.rdp-day_selected:hover { background: #4f46e5 !important; }
+.rdp-day_today:not(.rdp-day_selected) { color: #6366f1; font-weight: 700; }
+.rdp-day_outside { color: #a1a1aa; opacity: 0.5; }
+.rdp-day_disabled { opacity: 0.3; cursor: not-allowed; }
+.rdp-nav_button { color: #a1a1aa; border-radius: 8px; }
+.rdp-nav_button:hover { background: #f2f2f4; color: #18181b; }
+
+/* ─── scrollbar ─────────────────────────────────────────── */
+* { scrollbar-width: thin; scrollbar-color: #d4d4d8 transparent; }
+*::-webkit-scrollbar { width: 4px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 99px; }
+
+/* sidebar scrollbar (dark) */
+aside *::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); }
+
+@layer utilities {
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-}
-
-label,
-input {
-    font-family: 'Bahnschrift';
-    font-weight: 500;
-
-}
-
-#landing {
-    background: rgb(122, 72, 137);
-    background: radial-gradient(circle, rgba(122, 72, 137, 1) 11%, rgba(54, 35, 73, 1) 69%, rgba(31, 22, 51, 1) 100%);
-}
-
-* {
-    scrollbar-width: auto;
-    scrollbar-color: #99a0b6 inherit;
-}
-
-*::-webkit-scrollbar {
-    width: 10px;
-}
-
-*::-webkit-scrollbar-track {
-    background: inherit;
-}
-
-*::-webkit-scrollbar-thumb {
-    background-color: #8b90a3;
-    border-radius: 20px;
+  }
+  .glass {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .glass-dark {
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.07);
+  }
 }

@@ -1,17 +1,14 @@
-import { fetchAllTasks } from "./fetchAllTasks";
+﻿import { fetchAllTasks } from "./fetchAllTasks";
 
 export async function fetchTodayTasks(userId, organizationId = null) {
-  try {
-    const tasks = await fetchAllTasks(userId, organizationId);
-    const todayTasks = tasks.filter((task) => {
-      const dueDate = new Date(task.dueDate);
-      const today = new Date();
-      return dueDate.getDate() === today.getDate() &&
-        dueDate.getMonth() === today.getMonth() &&
-        dueDate.getFullYear() === today.getFullYear();
-    });
-    return todayTasks.filter((task) => !task.completed);
-  } catch (error) {
-    console.error("Error fetching today's tasks:", error);
-  }
+  const tasks = await fetchAllTasks(userId, organizationId);
+  const today = new Date();
+  return tasks.filter((task) => {
+    if (task.completed) return false;
+    const d = new Date(task.dueDate);
+    return d.getDate() === today.getDate() &&
+      d.getMonth() === today.getMonth() &&
+      d.getFullYear() === today.getFullYear();
+  });
 }
+

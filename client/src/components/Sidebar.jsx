@@ -1,99 +1,136 @@
-import { Link, NavLink } from "react-router-dom";
-import { TbCalendarClock, TbSmartHome } from "react-icons/tb";
-import { SignedIn, OrganizationSwitcher, UserButton } from "@clerk/clerk-react";
-import { motion } from 'framer-motion';
-import { fadeIn, fadeOut, pageTransition } from "../utils/framer";
-import { FaRegStar } from "react-icons/fa";
-import { IoCloudDoneOutline } from "react-icons/io5";
-import { BsSun } from "react-icons/bs";
+﻿/* eslint-disable react/prop-types */
+import { NavLink } from "react-router-dom";
+import { SignedIn, UserButton, useUser } from "@clerk/clerk-react";
+import { TbCalendarClock, TbSun, TbStar, TbCheck, TbLayoutGrid, TbChartBar } from "react-icons/tb";
 import logo from "../assets/maze.png";
+import { useGetUserId } from "../hooks/getUserId";
+import { useGetUserOrgId } from "../hooks/getUserOrgId";
+import { useTodos } from "../hooks/useTodos";
 
-export default function Sidebar() {
+/* â”€â”€â”€ derive badge counts from cached todos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function useCounts() {
+    const userId         = useGetUserId();
+    const organizationId = useGetUserOrgId();
+    const { data: todos = [] } = useTodos(userId, organizationId);
 
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+
+    return {
+        today:     todos.filter(t => {
+            if (!t.dueDate || t.completed) return false;
+            const d = new Date(t.dueDate); d.setHours(0,0,0,0);
+            return d.getTime() === today.getTime();
+        }).length,
+        upcoming:  todos.filter(t => {
+            if (!t.dueDate || t.completed) return false;
+            const d = new Date(t.dueDate); d.setHours(0,0,0,0);
+            const seven = new Date(today); seven.setDate(seven.getDate() + 7);
+            return d > today && d <= seven;
+        }).length,
+        important: todos.filter(t => t.important && !t.completed).length,
+        completed: todos.filter(t => t.completed).length,
+        all:       todos.length,
+    };
+}
+
+function Badge({ n }) {
+    if (!n) return null;
     return (
-        <motion.div
-            initial={fadeIn}
-            animate={{ x: 0, opacity: 1 }}
-            exit={fadeOut}
-            transition={pageTransition}
-        >
-            <div id="sidebar" className="sm:w-full w-full sm:h-screen bg-gradient-to-r from-emerald-700 to-emerald-900 flex sm:flex-col flex-row justify-around items-center p-4">
-                <Link to="/">
-                    <div className="flex flex-row items-center w-full justify-center mb-32 text-2xl font-semibold gap-1">
-                        <img src={logo} alt="logo" className="w-8" />
-                        <span className="text-gray-900">Momentum</span>
-                    </div>
-                </Link>
-                <div className="flex flex-row md:flex-col h-full w-full space-y-12">
-                    <div className="w-full">
-                        <ul className="space-y-1 flex flex-row sm:flex-col text-gray-300 font-medium w-fit">
-                            <NavLink
-                                to="/todos"
-                                className={({ isActive }) =>
-                                    isActive
-                                        ? "hover:bg-gray-300 bg-gray-300 bg-opacity-15 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3 active"
-                                        : "hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3"
-                                }
-                            >
-                                <BsSun />
-                                My day
-                            </NavLink>
-                            <NavLink
-                                to="/upcoming"
-                                className={({ isActive }) =>
-                                    isActive
-                                        ? "hover:bg-gray-300 bg-gray-300 bg-opacity-15 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3 active"
-                                        : "hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3"
-                                }
-                            >
-                                <TbCalendarClock />
-                                Upcoming schedule
-
-                            </NavLink>
-                            <NavLink
-                                to="/important"
-                                className={({ isActive }) =>
-                                    isActive
-                                        ? "hover:bg-gray-300 bg-gray-300 bg-opacity-15 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3 active"
-                                        : "hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3"
-                                }
-                            >
-                                <FaRegStar />
-                                Important
-                            </NavLink>
-                            <NavLink
-                                to="/completed"
-                                className={({ isActive }) =>
-                                    isActive
-                                        ? "hover:bg-gray-300 bg-gray-300 bg-opacity-15 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3 active"
-                                        : "hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3"
-                                }
-                            >
-                                <IoCloudDoneOutline />
-                                Completed
-                            </NavLink>
-                            <NavLink
-                                to="/all"
-                                className={({ isActive }) =>
-                                    isActive
-                                        ? "hover:bg-gray-300 bg-gray-300 bg-opacity-15 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3 active"
-                                        : "hover:bg-gray-300 hover:bg-opacity-15 py-2 px-4 rounded-lg flex flex-row items-center gap-3"
-                                }
-                            >
-                                <TbSmartHome />
-                                All tasks
-                            </NavLink>
-                        </ul>
-                    </div>
-                </div>
-                <div className="flex w-full gap-1 justify-start">
-                    <SignedIn>
-                        <OrganizationSwitcher />
-                        <UserButton />
-                    </SignedIn>
-                </div>
-            </div>
-        </motion.div >
+        <span className="ml-auto text-[10px] font-semibold px-1.5 py-0.5 rounded-md bg-blue-600/10 text-blue-600/70 tabular-nums">
+            {n > 99 ? "99+" : n}
+        </span>
     );
 }
 
+function UserSection() {
+    const { user } = useUser();
+    return (
+        <div className="px-3 py-3 border-t border-blue-200/50 shrink-0 flex items-center gap-2.5">
+            <UserButton appearance={{ elements: { avatarBox: "w-7 h-7 shrink-0" } }} />
+            <div className="flex-1 min-w-0">
+                <p className="text-xs font-medium text-gray-900 truncate">{user?.firstName ?? "Account"}</p>
+                <p className="text-[11px] text-gray-600 truncate">{user?.primaryEmailAddress?.emailAddress ?? ""}</p>
+            </div>
+        </div>
+    );
+}
+
+export default function Sidebar() {
+    const counts = useCounts();
+
+    const NAV = [
+        { to: "/todos",     icon: TbSun,          label: "My Day",    count: counts.today,     iconColor: "text-amber-500" },
+        { to: "/upcoming",  icon: TbCalendarClock, label: "Upcoming",  count: counts.upcoming,  iconColor: "text-violet-500" },
+        { to: "/important", icon: TbStar,          label: "Important", count: counts.important, iconColor: "text-rose-500" },
+        { to: "/completed", icon: TbCheck,         label: "Completed", count: counts.completed, iconColor: "text-emerald-500" },
+        { to: "/all",       icon: TbLayoutGrid,    label: "All Tasks", count: counts.all,       iconColor: "text-blue-500" },
+    ];
+
+    return (
+        <aside className="flex flex-col h-screen w-56 shrink-0 bg-blue-100 overflow-hidden">
+            {/* Brand */}
+            <NavLink to="/" className="flex items-center gap-2.5 px-4 h-14 shrink-0">
+                <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center shrink-0 shadow-sm">
+                    <img src={logo} alt="Momentum" className="w-4 h-4 brightness-0 invert" />
+                </div>
+                <span className="text-sm font-bold text-gray-900 tracking-tight">Momentum</span>
+            </NavLink>
+
+            {/* Nav */}
+            <nav className="flex-1 px-2 py-3 overflow-y-auto">
+                <p className="px-3 mb-1.5 text-[10px] font-semibold uppercase tracking-widest text-blue-600 select-none">
+                    Views
+                </p>
+                <ul className="space-y-0.5">
+                    {NAV.map(({ to, icon: Icon, label, count, iconColor }) => (
+                        <li key={to}>
+                            <NavLink
+                                to={to}
+                                className={({ isActive }) =>
+                                    `group flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-100 ${
+                                        isActive
+                                            ? "bg-blue-500 text-white"
+                                            : "text-gray-700 hover:text-gray-900 hover:bg-blue-600/10"
+                                    }`
+                                }
+                            >
+                                {({ isActive }) => (
+                                    <>
+                                        <Icon className={`w-4 h-4 shrink-0 ${isActive ? "text-white" : iconColor}`} />
+                                        <span className="flex-1 truncate">{label}</span>
+                                        <Badge n={count} />
+                                    </>
+                                )}
+                            </NavLink>
+                        </li>
+                    ))}
+                </ul>
+
+                {/* Analytics */}
+                <p className="px-3 mt-5 mb-1.5 text-[10px] font-semibold uppercase tracking-widest text-blue-600 select-none">
+                    Insights
+                </p>
+                <NavLink
+                    to="/stats"
+                    className={({ isActive }) =>
+                        `flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-100 ${
+                            isActive ? "bg-blue-600 text-white" : "text-gray-700 hover:text-gray-900 hover:bg-blue-600/10"
+                        }`
+                    }
+                >
+                    {({ isActive }) => (
+                        <>
+                            <TbChartBar className={`w-4 h-4 shrink-0 ${isActive ? "text-white" : "text-indigo-500"}`} />
+                            <span>Stats</span>
+                        </>
+                    )}
+                </NavLink>
+            </nav>
+
+            {/* User */}
+            <SignedIn>
+                <UserSection />
+            </SignedIn>
+        </aside>
+    );
+}

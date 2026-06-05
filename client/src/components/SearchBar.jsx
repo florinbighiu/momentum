@@ -1,36 +1,28 @@
-import { useState } from 'react';
+﻿/* eslint-disable react/prop-types */
+import { TbSearch, TbX } from "react-icons/tb";
 
-const SearchBar = () => {
-    const [searchTerm, setSearchTerm] = useState('');
-
-    const handleSearchChange = (event) => {
-        setSearchTerm(event.target.value);
-    };
-
+export default function SearchBar({ value, onChange }) {
     return (
-        <div className="flex rounded-full border border-gray-300 overflow-hidden w-full sm:w-auto">
+        <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-all w-44
+            ${value
+                ? "bg-white border-gray-300 shadow-sm"
+                : "bg-gray-100 border-gray-200 hover:border-gray-300"
+            }
+            focus-within:bg-white focus-within:border-indigo-500 focus-within:shadow-sm`}
+        >
+            <TbSearch className="w-3.5 h-3.5 text-gray-400 shrink-0" />
             <input
                 type="text"
-                className="px-4 py-2 w-full focus:outline-none"
+                value={value}
+                onChange={e => onChange(e.target.value)}
                 placeholder="Search..."
-                value={searchTerm}
-                onChange={handleSearchChange}
+                className="bg-transparent text-sm text-gray-900 placeholder-gray-400 focus:outline-none w-full"
             />
-            <button className="flex items-center px-4 py-2 text-sm text-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                <svg
-                    className="h-4 w-4"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                >
-                    <path
-                        fillRule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clipRule="evenodd"
-                    />
-                </svg>
-            </button>
+            {value && (
+                <button onClick={() => onChange("")} className="text-gray-400 hover:text-gray-600 transition-colors shrink-0">
+                    <TbX className="w-3.5 h-3.5" />
+                </button>
+            )}
         </div>
     );
-};
-
-export default SearchBar;
+}

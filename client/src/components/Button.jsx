@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+﻿/* eslint-disable react/prop-types */
 
 const Button = ({ children, type = 'button', variant = 'primary', onClick }) => {
     const variants = {
@@ -17,3 +17,4 @@ const Button = ({ children, type = 'button', variant = 'primary', onClick }) => 
 };
 
 export default Button;
+

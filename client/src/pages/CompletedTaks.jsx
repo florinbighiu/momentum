@@ -1,9 +1,6 @@
-import { IoCloudDoneOutline } from "react-icons/io5";
 import { TasksList } from "../components/TasksList";
-import { fetchCompletedTasks } from "../api/fetchCompletedTasks";
+import { TbCheck } from "react-icons/tb";
 
 export function CompletedTasks() {
-    return (
-        <TasksList icon={<IoCloudDoneOutline />} name={"Completed tasks"} handleFetchData={fetchCompletedTasks} />
-    );
+    return <TasksList icon={<TbCheck />} name="Completed" filter={t => t.completed} />;
 }

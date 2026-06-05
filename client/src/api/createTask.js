@@ -1,11 +1,7 @@
-import axios from "axios"; 
+﻿import axiosClient from "./axiosClient";
 
 export const createTodo = async (todoData) => {
-  try {
-    const response = await axios.post(`http://localhost:8080/api/todos/create`, todoData);
-    return response.data;
-  } catch (error) {
-    console.error("Error creating todo:", error);
-    throw error; 
-  }
+  const response = await axiosClient.post("/api/todos/create", todoData);
+  return response.data;
 };
+
